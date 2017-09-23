@@ -1,6 +1,6 @@
 package br.ucsal.pooavancado.chat;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -11,12 +11,23 @@ public class Servidor {
 		System.out.println("Porta 12345 aberta!");
 
 		Socket cliente = servidor.accept();
-		System.out.println("Nova conexão com o cliente " + cliente.getInetAddress().getHostAddress());
+		System.out.println("Nova conexï¿½o com o cliente " + cliente.getInetAddress().getHostAddress());
+
+		File arquivo = new File("arquivo.txt");
+		FileWriter grava = new FileWriter(arquivo);
+		PrintWriter escreve = new PrintWriter(grava);
+
+		String texto = "";
+
 
 		Scanner entrada = new Scanner(cliente.getInputStream());
 		while (entrada.hasNextLine()) {
-			System.out.println(entrada.nextLine());
+			texto = entrada.nextLine();
+			escreve.println(texto);
+
 		}
+		escreve.close();
+		grava.close();
 
 		entrada.close();
 		servidor.close();
